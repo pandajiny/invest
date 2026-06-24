@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 시장 돈의 흐름과 인프라 구조</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d9dee8;
+      --green: #0f8f5f;
+      --green-soft: #dff5eb;
+      --blue: #246bfe;
+      --blue-soft: #e7efff;
+      --amber: #b66a00;
+      --amber-soft: #fff1d6;
+      --red: #b42318;
+      --red-soft: #ffebe8;
+      --violet: #6f42c1;
+      --violet-soft: #efe7ff;
+      --steel: #3d4a5c;
+      --steel-soft: #e9edf2;
+      --shadow: 0 12px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #155eef;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-text,
+    .hero-panel,
+    .section,
+    .note {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-text {
+      padding: 34px;
+    }
+
+    .hero-panel {
+      padding: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 42px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: #344054;
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #344054;
+      background: #fbfcfe;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .meter {
+      display: grid;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr) 72px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      background: #eef2f6;
+      border-radius: 999px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bar-green { background: var(--green); width: 92%; }
+    .bar-blue { background: var(--blue); width: 78%; }
+    .bar-amber { background: var(--amber); width: 70%; }
+    .bar-red { background: var(--red); width: 58%; }
+
+    .section {
+      margin-top: 24px;
+      padding: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .section-header p {
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      margin: 0 6px 8px 0;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .tag.green { color: #075c3e; background: var(--green-soft); }
+    .tag.blue { color: #13439b; background: var(--blue-soft); }
+    .tag.amber { color: #754100; background: var(--amber-soft); }
+    .tag.red { color: #7a1a12; background: var(--red-soft); }
+    .tag.violet { color: #4d238a; background: var(--violet-soft); }
+    .tag.steel { color: #344054; background: var(--steel-soft); }
+
+    .cash-map {
+      overflow-x: auto;
+      padding: 8px 0 2px;
+    }
+
+    .cash-map svg {
+      min-width: 1060px;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .node-title {
+      font-size: 17px;
+      font-weight: 760;
+      fill: #111827;
+    }
+
+    .node-sub {
+      font-size: 13px;
+      fill: #475467;
+    }
+
+    .node-small {
+      font-size: 12px;
+      fill: #667085;
+    }
+
+    .flow-label {
+      font-size: 12px;
+      font-weight: 760;
+      fill: #087443;
+    }
+
+    .risk-label {
+      font-size: 13px;
+      font-weight: 720;
+      fill: #912018;
+    }
+
+    .money {
+      font-size: 18px;
+      font-weight: 820;
+      fill: #0f8f5f;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      color: #475467;
+      font-size: 13px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .dot.green { background: var(--green); }
+    .dot.blue { background: var(--blue); }
+    .dot.amber { background: var(--amber); }
+    .dot.red { background: var(--red); }
+    .dot.steel { background: var(--steel); }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .phase {
+      position: relative;
+      padding: 18px;
+      min-height: 174px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .phase-number {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--steel);
+      font-weight: 800;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    .matrix th {
+      background: #f2f4f7;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .callout {
+      padding: 18px;
+      border-left: 5px solid var(--green);
+      border-radius: 8px;
+      background: #f0fbf6;
+    }
+
+    .risk {
+      border-left-color: var(--red);
+      background: #fff5f4;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .list li {
+      margin: 7px 0;
+    }
+
+    .source-list {
+      columns: 2;
+      column-gap: 36px;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .source-list li {
+      break-inside: avoid;
+      margin: 0 0 9px;
+    }
+
+    .print-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 24px 14px 48px;
+      }
+
+      .hero,
+      .grid-2,
+      .grid-3,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .source-list {
+        columns: 1;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero-text,
+      .hero-panel,
+      .section,
+      .note,
+      .card,
+      .phase {
+        box-shadow: none;
+      }
+
+      .section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">작성일: 2026년 6월 24일</p>
+        <h1>AI 시장 돈의 흐름과 인프라 구조</h1>
+        <p class="lead">
+          AI는 단순한 소프트웨어 기능 추가가 아니라, 기업의 인건비와 외주비 일부가
+          AI 솔루션, 모델 API, 클라우드, 데이터센터, 반도체, 전력 인프라로 이동하는
+          비용 구조 변화로 볼 수 있다.
+        </p>
+        <div class="meta">
+          <span class="pill">핵심 축: 생산성</span>
+          <span class="pill">핵심 병목: 전력과 데이터센터</span>
+          <span class="pill">초기 수혜: GPU, HBM, 파운드리</span>
+          <span class="pill">중기 수혜: 클라우드와 SaaS</span>
+        </div>
+      </div>
+
+      <aside class="hero-panel">
+        <h2>현재 판단</h2>
+        <p>
+          AI 수요는 실제지만, 모든 AI 관련 기업이 같은 방식으로 돈을 버는 것은 아니다.
+          초기에는 인프라가 가장 먼저 매출을 잡고, 시간이 갈수록 업무 흐름을 장악한
+          소프트웨어와 클라우드가 더 큰 몫을 가져갈 가능성이 있다.
+        </p>
+        <div class="meter" aria-label="AI 가치사슬별 현재 수혜 강도">
+          <div class="meter-row">
+            <span>GPU/네트워크</span>
+            <div class="bar"><span class="bar-green"></span></div>
+            <strong>매우 큼</strong>
+          </div>
+          <div class="meter-row">
+            <span>파운드리/HBM</span>
+            <div class="bar"><span class="bar-blue"></span></div>
+            <strong>큼</strong>
+          </div>
+          <div class="meter-row">
+            <span>클라우드/SaaS</span>
+            <div class="bar"><span class="bar-amber"></span></div>
+            <strong>커짐</strong>
+          </div>
+          <div class="meter-row">
+            <span>전력/냉각</span>
+            <div class="bar"><span class="bar-red"></span></div>
+            <strong>병목</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>한 줄 결론</h2>
+          <p>
+            AI 시대의 핵심 질문은 “어떤 회사가 AI를 쓰는가”보다
+            “누가 기업의 절감된 인건비를 반복 매출로 가져갈 수 있는가”다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="tag green">사실</span>
+          <strong>AI 인프라 매출은 이미 발생 중이다.</strong>
+          <p>
+            Nvidia 데이터센터 매출, TSMC HPC 비중, HBM 수요, 클라우드 AI 매출은
+            AI 투자가 실제 매출로 연결되고 있음을 보여준다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag blue">해석</span>
+          <strong>비용 구조가 인건비에서 AI 비용으로 이동한다.</strong>
+          <p>
+            기업은 사람을 바로 줄이기보다 신규 채용, 외주, 주니어 업무를 먼저 줄이고
+            AI 도구와 클라우드 비용을 늘릴 가능성이 크다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag amber">추정</span>
+          <strong>장기 초과수익은 워크플로우 장악에서 나온다.</strong>
+          <p>
+            모델 자체보다 특정 산업의 데이터, 규제, 업무 흐름, 배포망을 가진 회사가
+            더 오래 가격 결정력을 가질 수 있다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>현금 흐름 지도</h2>
+          <p>
+            기존 기업의 인건비 절감분이 어떤 경로로 AI 가치사슬 아래쪽으로 내려가는지
+            시각화한 그림이다. 화살표가 굵을수록 현재 돈이 먼저 흘러가는 구간이다.
+          </p>
+        </div>
+      </div>
+
+      <div class="cash-map" role="img" aria-label="AI 시장 현금 흐름 지도">
+        <svg viewBox="0 0 1180 670" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrowGreen" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M1.5,1.5 L11,6 L1.5,10.5 L4,6 Z" fill="#0f8f5f"/>
+            </marker>
+            <marker id="arrowBlue" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M1.5,1.5 L11,6 L1.5,10.5 L4,6 Z" fill="#246bfe"/>
+            </marker>
+            <marker id="arrowAmber" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M1.5,1.5 L11,6 L1.5,10.5 L4,6 Z" fill="#b66a00"/>
+            </marker>
+            <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#101828" flood-opacity="0.12"/>
+            </filter>
+          </defs>
+
+          <rect x="0" y="0" width="1180" height="670" rx="18" fill="#f8fafc"/>
+          <text x="34" y="44" class="node-title">AI 시대 돈의 흐름</text>
+          <text x="34" y="68" class="node-sub">기업의 절감된 인건비와 외주비가 AI 구독료, 클라우드, 반도체, 전력 인프라로 이동</text>
+
+          <g aria-label="현금 이동 화살표">
+            <path d="M239 160 C270 154 286 151 318 148" fill="none" stroke="#0f8f5f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M239 196 C270 244 285 291 318 314" fill="none" stroke="#0f8f5f" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M533 150 C565 150 584 150 616 150" fill="none" stroke="#0f8f5f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M533 330 C565 330 584 330 616 330" fill="none" stroke="#246bfe" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+            <path d="M724 212 C724 236 724 244 724 268" fill="none" stroke="#0f8f5f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M831 150 C862 150 881 150 912 150" fill="none" stroke="#0f8f5f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M1022 212 C1022 236 1022 244 1022 268" fill="none" stroke="#0f8f5f" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+            <path d="M724 388 C724 412 724 424 724 448" fill="none" stroke="#b66a00" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowAmber)"/>
+            <path d="M912 330 C880 350 862 374 831 438" fill="none" stroke="#b66a00" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowAmber)"/>
+            <path d="M150 238 C148 326 180 393 236 448" fill="none" stroke="#b42318" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8" marker-end="url(#arrowAmber)"/>
+          </g>
+
+          <g filter="url(#softShadow)">
+            <rect x="34" y="118" width="205" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="54" y="152" class="node-title">기존 산업 기업</text>
+            <text x="54" y="179" class="node-sub">은행, 병원, 로펌,</text>
+            <text x="54" y="199" class="node-sub">콜센터, 제조, 유통</text>
+            <text x="54" y="222" class="money">₩₩₩ 절감 여력</text>
+
+            <rect x="318" y="92" width="215" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="338" y="126" class="node-title">AI 솔루션/SaaS</text>
+            <text x="338" y="153" class="node-sub">업무별 자동화 제품</text>
+            <text x="338" y="173" class="node-sub">Copilot, Glean, Harvey</text>
+            <text x="338" y="196" class="money">구독료</text>
+
+            <rect x="318" y="268" width="215" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="338" y="302" class="node-title">자체 AI 구축</text>
+            <text x="338" y="329" class="node-sub">프라이빗 클라우드,</text>
+            <text x="338" y="349" class="node-sub">보안, 데이터 정리</text>
+            <text x="338" y="372" class="money">프로젝트 비용</text>
+
+            <rect x="616" y="92" width="215" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="636" y="126" class="node-title">모델 제공 업체</text>
+            <text x="636" y="153" class="node-sub">OpenAI, Anthropic,</text>
+            <text x="636" y="173" class="node-sub">Google, Meta, Mistral</text>
+            <text x="636" y="196" class="money">API 사용료</text>
+
+            <rect x="616" y="268" width="215" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="636" y="302" class="node-title">클라우드/데이터센터</text>
+            <text x="636" y="329" class="node-sub">Azure, AWS, GCP,</text>
+            <text x="636" y="349" class="node-sub">Oracle, CoreWeave</text>
+            <text x="636" y="372" class="money">컴퓨팅 임대료</text>
+
+            <rect x="912" y="92" width="220" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="932" y="126" class="node-title">칩 설계</text>
+            <text x="932" y="153" class="node-sub">Nvidia, AMD, Broadcom,</text>
+            <text x="932" y="173" class="node-sub">Marvell, 자체 ASIC</text>
+            <text x="932" y="196" class="money">GPU/ASIC 매출</text>
+
+            <rect x="912" y="268" width="220" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="932" y="302" class="node-title">생산/메모리/장비</text>
+            <text x="932" y="329" class="node-sub">TSMC, HBM, ASML,</text>
+            <text x="932" y="349" class="node-sub">패키징, 기판</text>
+            <text x="932" y="372" class="money">웨이퍼/HBM/장비</text>
+
+            <rect x="616" y="448" width="215" height="120" rx="10" fill="#ffffff" stroke="#d9dee8"/>
+            <text x="636" y="482" class="node-title">전력/냉각/송전망</text>
+            <text x="636" y="509" class="node-sub">Vertiv, Eaton, Schneider,</text>
+            <text x="636" y="529" class="node-sub">GE Vernova, Quanta</text>
+            <text x="636" y="552" class="money">인프라 투자</text>
+
+            <rect x="34" y="448" width="420" height="120" rx="10" fill="#fff5f4" stroke="#fecdca"/>
+            <text x="54" y="482" class="node-title">남는 돈의 일부</text>
+            <text x="54" y="509" class="node-sub">기업이 AI로 절감한 비용 중 일부는 이익으로 남고, 일부는 가격 인하,</text>
+            <text x="54" y="529" class="node-sub">신규 제품, 영업 확장, 데이터 정비, AI 운영 인력으로 재투입된다.</text>
+            <text x="54" y="552" class="risk-label">모든 절감분이 AI 공급자에게 가는 것은 아님</text>
+          </g>
+
+          <text x="263" y="130" class="flow-label">구독료</text>
+          <text x="266" y="280" class="flow-label">내재화 투자</text>
+          <text x="558" y="133" class="flow-label">API 비용</text>
+          <text x="555" y="312" class="flow-label">클라우드 비용</text>
+          <text x="744" y="246" class="flow-label">서빙</text>
+          <text x="852" y="122" class="flow-label">칩 구매</text>
+          <text x="1050" y="246" class="flow-label">제조 위탁</text>
+          <text x="748" y="410" class="flow-label">전력/냉각</text>
+          <text x="850" y="418" class="flow-label">설비 확장</text>
+          <text x="164" y="356" class="risk-label">절감분 일부는 기업 이익으로 잔류</text>
+
+          <text x="274" y="171" class="money">₩</text>
+          <text x="286" y="206" class="money">₩</text>
+          <text x="560" y="171" class="money">₩</text>
+          <text x="574" y="350" class="money">₩</text>
+          <text x="852" y="174" class="money">₩₩</text>
+          <text x="998" y="246" class="money">₩₩</text>
+          <text x="704" y="424" class="money">₩</text>
+        </svg>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot green"></i> 반복 매출/사용료</span>
+        <span><i class="dot blue"></i> 기업 내부 구축 비용</span>
+        <span><i class="dot amber"></i> 물리 인프라 투자</span>
+        <span><i class="dot red"></i> 공급자가 가져가지 못하는 절감분</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>AI 확산 단계</h2>
+          <p>
+            지금은 앱 혁신만의 문제가 아니라, 반도체와 데이터센터와 전력망이 동시에 맞물리는
+            인프라 사이클로 보는 편이 자연스럽다.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="phase">
+          <span class="phase-number">1</span>
+          <h3>인건비와 외주비 압박</h3>
+          <p>고객지원, 자료 조사, 초안 작성, 주니어 업무가 먼저 AI와 겹친다.</p>
+          <span class="tag green">수요 발생</span>
+        </div>
+        <div class="phase">
+          <span class="phase-number">2</span>
+          <h3>업무용 AI 솔루션 확산</h3>
+          <p>SaaS와 산업별 솔루션이 모델 API를 감싸고 실제 업무 흐름에 들어간다.</p>
+          <span class="tag blue">구독료</span>
+        </div>
+        <div class="phase">
+          <span class="phase-number">3</span>
+          <h3>클라우드와 칩 투자 증가</h3>
+          <p>모델 학습과 추론 수요가 데이터센터, GPU, HBM, 파운드리 매출로 이어진다.</p>
+          <span class="tag amber">CAPEX</span>
+        </div>
+        <div class="phase">
+          <span class="phase-number">4</span>
+          <h3>전력과 냉각이 병목화</h3>
+          <p>데이터센터는 전기, 송전망, 변압기, 냉각, 허가 없이는 확장되지 않는다.</p>
+          <span class="tag red">병목</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>가치사슬별 돈을 버는 방식</h2>
+          <p>
+            같은 AI 수혜주라도 매출이 생기는 원천은 다르다. 가격 결정력이 어디에 있는지를
+            구분해야 한다.
+          </p>
+        </div>
+      </div>
+
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>계층</th>
+            <th>돈을 받는 이유</th>
+            <th>대표 기업</th>
+            <th>핵심 리스크</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>기존 산업 기업</strong></td>
+            <td>AI로 처리량을 늘리고 인건비, 외주비, 재작업 비용을 줄인다.</td>
+            <td>은행, 보험, 병원, 로펌, 제조, 유통, 콜센터 운영사</td>
+            <td>절감분이 경쟁 때문에 가격 인하로 사라질 수 있다.</td>
+          </tr>
+          <tr>
+            <td><strong>AI 솔루션/SaaS</strong></td>
+            <td>업무 흐름 안에 AI를 붙여 구독료와 사용량 기반 매출을 받는다.</td>
+            <td>Microsoft, ServiceNow, Salesforce, Adobe, Intuit, Glean, Harvey, Sierra</td>
+            <td>기능이 범용 모델에 흡수되면 가격 결정력이 약해진다.</td>
+          </tr>
+          <tr>
+            <td><strong>모델 제공 업체</strong></td>
+            <td>API, 엔터프라이즈 계약, 모델 라이선스, 자체 제품으로 수익화한다.</td>
+            <td>OpenAI, Anthropic, Google, Meta, Mistral, xAI</td>
+            <td>학습비와 추론비가 크고, 모델 성능 격차가 빨리 줄 수 있다.</td>
+          </tr>
+          <tr>
+            <td><strong>클라우드/데이터센터</strong></td>
+            <td>GPU 클러스터와 스토리지, 네트워크, 보안, 운영환경을 임대한다.</td>
+            <td>Microsoft Azure, AWS, Google Cloud, Oracle, CoreWeave, Equinix, Digital Realty</td>
+            <td>CAPEX 회수 기간이 길고 전력 확보가 병목이 될 수 있다.</td>
+          </tr>
+          <tr>
+            <td><strong>칩 설계</strong></td>
+            <td>GPU, 네트워킹, ASIC, 가속기를 판매한다.</td>
+            <td>Nvidia, AMD, Broadcom, Marvell, Google TPU, AWS Trainium, Microsoft Maia</td>
+            <td>메가테크 자체 칩, AMD 대체재, 추론 최적화가 마진을 압박할 수 있다.</td>
+          </tr>
+          <tr>
+            <td><strong>생산/메모리/장비</strong></td>
+            <td>첨단 공정, HBM, 패키징, EUV 장비, 기판을 공급한다.</td>
+            <td>TSMC, SK하이닉스, Micron, Samsung, ASML, ASE, Amkor</td>
+            <td>증설 후 공급 과잉, 고객 집중도, 기술 전환 실패가 리스크다.</td>
+          </tr>
+          <tr>
+            <td><strong>전력/냉각/송전망</strong></td>
+            <td>데이터센터가 요구하는 전기, 냉각, 변전, 송전, 백업 전력을 공급한다.</td>
+            <td>Vertiv, Eaton, Schneider Electric, GE Vernova, Siemens Energy, Quanta Services</td>
+            <td>규제, 허가 지연, 지역 주민 반발, 전기요금 상승이 변수다.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>직무 변화 관점</h2>
+          <p>
+            AI는 모든 직업을 같은 속도로 바꾸지 않는다. 대체되는 업무와 증강되는 업무를
+            분리해서 봐야 한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag red">대체 압력</span>
+          <h3>반복적이고 검증 가능한 디지털 업무</h3>
+          <ul class="list">
+            <li>텔레마케터, 1차 고객지원, 하급 영업 보조</li>
+            <li>자료 조사, 데이터 분류, 문서 입력, 반복 보고서</li>
+            <li>번역, 요약, 콘텐츠 초안, 간단한 리서치 외주</li>
+            <li>주니어 화이트칼라의 초안, 정리, 비교 업무</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag green">역량 증강</span>
+          <h3>검증과 책임을 사람이 맡는 고부가 업무</h3>
+          <ul class="list">
+            <li>프로그래머: 코드 초안, 테스트, 리팩터링, 문서화</li>
+            <li>의사: 기록 요약, 영상 판독 보조, 보험청구, 문진</li>
+            <li>변호사: 판례 검색, 계약서 비교, 실사 문서 검토</li>
+            <li>관리직: 자료 정리와 실행 추적을 AI에게 위임</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 16px;">
+        <strong>핵심 판단:</strong>
+        의료, 법률, 금융은 물리 작업이 적기 때문에 생각보다 빠르게 변할 수 있다.
+        다만 최종 판단, 책임, 규제 보고가 필요한 영역은 완전 자동화보다 보조 도구 형태가 먼저 확산될 가능성이 높다.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>반도체와 인프라 관점</h2>
+          <p>
+            기존 소프트웨어 혁신이 반도체, 통신망, 배터리 발전 위에서 열렸다는 관점은
+            AI에도 적용된다. 다만 이번에는 인프라가 완성된 뒤가 아니라, 클라우드 사업자가
+            미래 비용 하락을 믿고 먼저 깔고 있는 성격이 강하다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="tag green">현재 강점</span>
+          <strong>Nvidia는 단순 GPU 회사가 아니다.</strong>
+          <p>
+            CUDA, 네트워킹, NVLink, 서버 시스템, AI 라이브러리까지 묶은 플랫폼 회사에 가깝다.
+            현재 AI 학습과 범용 인프라에서는 가장 강한 포지션이다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag amber">장기 변수</span>
+          <strong>메가테크는 직접 곡괭이를 만들 수 있다.</strong>
+          <p>
+            Google TPU, AWS Trainium, Microsoft Maia처럼 반복적인 대규모 추론 워크로드는
+            자체 칩으로 일부 대체될 수 있다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag blue">실제 병목</span>
+          <strong>칩 생산은 분업 구조다.</strong>
+          <p>
+            Nvidia도 설계는 직접 하지만, 생산은 TSMC, 메모리는 HBM 업체, 패키징과 기판은
+            별도 공급망에 의존한다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>비용 하락과 범용화 조건</h2>
+          <p>
+            토큰 단가는 내려가고 있지만, 실제 업무 자동화 비용은 모델 호출비뿐 아니라
+            검색, 재시도, 검증, 보안, 운영비까지 포함해서 봐야 한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="callout">
+          <strong>범용화가 빨라지는 조건</strong>
+          <ul class="list">
+            <li>단순 작업의 추론 비용이 인간 시간 비용보다 충분히 낮아진다.</li>
+            <li>AI가 기존 ERP, CRM, 문서, 이메일, 개발 도구 안으로 들어간다.</li>
+            <li>검증 가능한 작업부터 자동화되어 실패 비용을 낮춘다.</li>
+            <li>클라우드와 온디바이스 모델이 역할을 나눠 비용을 낮춘다.</li>
+          </ul>
+        </div>
+        <div class="callout risk">
+          <strong>가정이 흔들리는 지점</strong>
+          <ul class="list">
+            <li>AI 서비스 매출이 CAPEX와 전력비 증가를 따라가지 못한다.</li>
+            <li>모델 성능 격차가 줄어 API 가격이 빠르게 상품화된다.</li>
+            <li>전력망 연결 지연으로 데이터센터 확장이 늦어진다.</li>
+            <li>기업이 AI를 도입해도 실제 생산성 지표가 개선되지 않는다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>확인해야 할 지표</h2>
+          <p>
+            이 메모의 판단을 유지하려면 아래 지표를 계속 확인해야 한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="tag steel">인프라</span>
+          <ul class="list">
+            <li>Nvidia 데이터센터 매출 성장률과 총마진</li>
+            <li>HBM 가격과 공급 부족 완화 여부</li>
+            <li>TSMC CoWoS와 첨단 패키징 증설 속도</li>
+            <li>전력 계약, 계통 연결 대기, 변압기 리드타임</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag steel">클라우드와 모델</span>
+          <ul class="list">
+            <li>Azure, AWS, Google Cloud의 AI 관련 매출</li>
+            <li>OpenAI, Anthropic, Google 모델 API 가격 하락 속도</li>
+            <li>TPU, Trainium, Maia의 외부 고객 채택 여부</li>
+            <li>AI 추론 비용 하락 속도와 캐싱 효율</li>
+          </ul>
+        </div>
+        <div class="card">
+          <span class="tag steel">생산성</span>
+          <ul class="list">
+            <li>고객센터, 법률, 의료 문서화의 처리량 개선</li>
+            <li>신규 채용 감소와 외주비 축소 여부</li>
+            <li>AI 도입 기업의 영업이익률 개선 여부</li>
+            <li>오류율, 재작업률, 규제 사고 발생 여부</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>관련 기업 지도</h2>
+          <p>
+            종목명만 보지 말고 각 기업이 가치사슬의 어느 위치에서 돈을 받는지 확인해야 한다.
+          </p>
+        </div>
+      </div>
+
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>위치</th>
+            <th>기업</th>
+            <th>유리한 조건</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI 플랫폼/클라우드</td>
+            <td>Microsoft, Google, Amazon, Oracle</td>
+            <td>기업 고객이 AI를 실제 업무 시스템에 붙이고 사용량이 늘어날 때</td>
+          </tr>
+          <tr>
+            <td>모델/API</td>
+            <td>OpenAI, Anthropic, Google, Meta, Mistral</td>
+            <td>모델 성능 격차가 유지되고 API 가격 하락보다 사용량 증가가 클 때</td>
+          </tr>
+          <tr>
+            <td>GPU/가속기</td>
+            <td>Nvidia, AMD, Broadcom, Marvell</td>
+            <td>학습과 추론 수요가 계속 늘고 자체 칩 대체 속도가 제한적일 때</td>
+          </tr>
+          <tr>
+            <td>파운드리/메모리</td>
+            <td>TSMC, SK하이닉스, Micron, Samsung, ASML</td>
+            <td>첨단 공정, HBM, 패키징 공급이 계속 병목일 때</td>
+          </tr>
+          <tr>
+            <td>전력/냉각</td>
+            <td>Vertiv, Eaton, Schneider Electric, GE Vernova, Siemens Energy, Quanta Services</td>
+            <td>데이터센터 건설이 전력과 냉각 인프라를 계속 요구할 때</td>
+          </tr>
+          <tr>
+            <td>업무용 AI 솔루션</td>
+            <td>ServiceNow, Salesforce, Adobe, Intuit, Palantir, Glean, Harvey, Sierra</td>
+            <td>특정 산업 워크플로우를 장악하고 가격 결정력을 유지할 때</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>출처</h2>
+          <p>
+            수치와 회사 발언은 시간이 지나면 바뀔 수 있으므로, 업데이트 시점마다 다시 확인해야 한다.
+          </p>
+        </div>
+      </div>
+
+      <ul class="source-list">
+        <li><a href="https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2027">Nvidia 2027 회계연도 1분기 실적 발표</a></li>
+        <li><a href="https://investor.tsmc.com/english/quarterly-results/2026/q1">TSMC 2026년 1분기 실적 자료</a></li>
+        <li><a href="https://www.microsoft.com/en-us/investor/earnings/FY-2026-Q3/press-release-webcast">Microsoft 2026 회계연도 3분기 실적 발표</a></li>
+        <li><a href="https://www.iea.org/reports/energy-and-ai/executive-summary">IEA Energy and AI Executive Summary</a></li>
+        <li><a href="https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/">OpenAI GPT-4o mini 비용 발표</a></li>
+        <li><a href="https://arxiv.org/abs/2511.23455">AI 추론 비용 하락 관련 연구</a></li>
+        <li><a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=64700">Harvard Business School 생성형 AI 생산성 실험</a></li>
+        <li><a href="https://arxiv.org/abs/2304.11771">고객지원 업무의 생성형 AI 생산성 효과 연구</a></li>
+        <li><a href="https://developer.nvidia.com/cuda">Nvidia CUDA</a></li>
+        <li><a href="https://cloud.google.com/tpu">Google Cloud TPU</a></li>
+        <li><a href="https://aws.amazon.com/ai/machine-learning/trainium/">AWS Trainium</a></li>
+        <li><a href="https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-enabled-medical-devices">FDA AI 의료기기 목록</a></li>
+      </ul>
+
+      <p class="print-note">
+        이 문서는 투자 권유가 아니라 산업 구조와 돈의 흐름을 정리하기 위한 작업 메모다.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
