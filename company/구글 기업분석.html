@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>구글 기업분석</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --paper: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d9dee8;
+      --green: #0f8f5f;
+      --green-soft: #dff5eb;
+      --blue: #246bfe;
+      --blue-soft: #e7efff;
+      --amber: #b66a00;
+      --amber-soft: #fff1d6;
+      --red: #b42318;
+      --red-soft: #ffebe8;
+      --violet: #6f42c1;
+      --violet-soft: #efe7ff;
+      --steel: #3d4a5c;
+      --steel-soft: #e9edf2;
+      --shadow: 0 12px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: #155eef;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 36px 24px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-text,
+    .hero-panel,
+    .section,
+    .card,
+    .callout {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-text {
+      padding: 34px;
+    }
+
+    .hero-panel {
+      padding: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 42px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: #344054;
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #344054;
+      background: #fbfcfe;
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .metric-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) auto;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .metric-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .metric-label {
+      color: #475467;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .metric-value {
+      color: #111827;
+      font-size: 20px;
+      font-weight: 820;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .section {
+      margin-top: 24px;
+      padding: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .section-header p {
+      max-width: 760px;
+      color: var(--muted);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 18px;
+      background: #fbfcfe;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      margin: 0 6px 8px 0;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .tag.green { color: #075c3e; background: var(--green-soft); }
+    .tag.blue { color: #13439b; background: var(--blue-soft); }
+    .tag.amber { color: #754100; background: var(--amber-soft); }
+    .tag.red { color: #7a1a12; background: var(--red-soft); }
+    .tag.violet { color: #4d238a; background: var(--violet-soft); }
+    .tag.steel { color: #344054; background: var(--steel-soft); }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .table-scroll .matrix {
+      min-width: 860px;
+    }
+
+    .matrix th,
+    .matrix td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    .matrix th {
+      background: #f2f4f7;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .num {
+      text-align: right !important;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .positive {
+      color: var(--green);
+      font-weight: 760;
+    }
+
+    .negative {
+      color: var(--red);
+      font-weight: 760;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .cash-bridge {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .bridge-step {
+      position: relative;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+      min-height: 126px;
+    }
+
+    .bridge-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -9px;
+      width: 16px;
+      height: 2px;
+      background: #9aa4b2;
+    }
+
+    .bridge-step strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #111827;
+      font-size: 15px;
+    }
+
+    .bridge-step .amount {
+      display: block;
+      margin-top: 8px;
+      color: var(--green);
+      font-size: 22px;
+      font-weight: 840;
+      line-height: 1.2;
+    }
+
+    .bridge-step.spend .amount {
+      color: var(--amber);
+    }
+
+    .bridge-step.return .amount {
+      color: var(--blue);
+    }
+
+    .dominance {
+      display: grid;
+      gap: 12px;
+    }
+
+    .dominance-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 74px;
+      gap: 12px;
+      align-items: center;
+      color: #344054;
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 12px;
+      overflow: hidden;
+      background: #eef2f6;
+      border-radius: 999px;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bar-search { width: 90.39%; background: var(--green); }
+    .bar-chrome { width: 70.25%; background: var(--blue); }
+    .bar-android { width: 68%; background: var(--amber); }
+    .bar-cloud { width: 13%; background: var(--violet); }
+
+    .callout {
+      padding: 18px;
+      border-left: 5px solid var(--green);
+      background: #f0fbf6;
+    }
+
+    .callout.risk {
+      border-left-color: var(--red);
+      background: #fff5f4;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .list li {
+      margin: 7px 0;
+    }
+
+    .source-list {
+      columns: 2;
+      column-gap: 36px;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .source-list li {
+      break-inside: avoid;
+      margin: 0 0 9px;
+    }
+
+    .print-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 24px 14px 48px;
+      }
+
+      .hero,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .cash-bridge {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .bridge-step:not(:last-child)::after {
+        display: none;
+      }
+
+      .dominance-row {
+        grid-template-columns: 118px minmax(0, 1fr) 64px;
+        font-size: 13px;
+      }
+
+      .source-list {
+        columns: 1;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero-text,
+      .hero-panel,
+      .section,
+      .card,
+      .callout {
+        box-shadow: none;
+      }
+
+      .section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">작성일: 2026년 6월 27일</p>
+        <h1>구글 기업분석</h1>
+        <p class="lead">
+          Alphabet은 Search와 YouTube에서 막대한 현금을 만들고, 그 현금을 Google Cloud,
+          TPU, Gemini, 데이터센터, Waymo 같은 장기 옵션에 재투자하는 회사다.
+          핵심 질문은 AI가 검색 광고를 훼손하는가가 아니라, 검색 광고 현금흐름을 AI 인프라와
+          클라우드 현금흐름으로 얼마나 잘 전환하느냐다.
+        </p>
+        <div class="meta">
+          <span class="pill">티커: GOOGL / GOOG</span>
+          <span class="pill">핵심 현금원: Search와 YouTube</span>
+          <span class="pill">성장축: Cloud, Gemini, TPU</span>
+          <span class="pill">주요 리스크: AI 검색과 규제</span>
+        </div>
+      </div>
+
+      <aside class="hero-panel">
+        <h2>현재 판단</h2>
+        <div class="metric-list">
+          <div class="metric-row">
+            <span class="metric-label">Q1 2026 매출</span>
+            <span class="metric-value">$109.9B</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Q1 2026 영업현금흐름</span>
+            <span class="metric-value">$45.8B</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Q1 2026 CAPEX</span>
+            <span class="metric-value">$35.7B</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Q1 2026 FCF</span>
+            <span class="metric-value">$10.1B</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">현금+단기투자</span>
+            <span class="metric-value">$126.8B</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>한 줄 결론</h2>
+          <p>
+            구글은 아직 광고 회사지만, AI 시대에 필요한 모델, 칩, 클라우드, 배포망, 현금흐름을
+            동시에 가진 드문 회사다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="tag green">사실</span>
+          <strong>검색 광고는 아직 무너지지 않았다.</strong>
+          <p>
+            2026년 1분기 Google Search &amp; other 매출은 604억 달러로 전년 대비 약 19% 성장했다.
+            AI 검색 우려가 있지만 현재 숫자는 여전히 강하다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag blue">해석</span>
+          <strong>Cloud는 더 이상 작은 옵션이 아니다.</strong>
+          <p>
+            2026년 1분기 Google Cloud 매출은 200억 달러, 영업이익은 66억 달러였다.
+            AI 인프라 수요가 Cloud의 성장성과 수익성을 동시에 밀어 올리고 있다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag amber">주의</span>
+          <strong>CAPEX가 현금흐름을 강하게 압박한다.</strong>
+          <p>
+            같은 분기 영업현금흐름은 458억 달러였지만 CAPEX가 357억 달러라 FCF는 101억 달러로 줄었다.
+            AI 투자의 수익률을 계속 확인해야 한다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>어디서 돈을 버는가</h2>
+          <p>
+            아래 표는 소계 중복을 제거한 2026년 1분기 매출 구성이다.
+            Google advertising이나 Google Services는 별도 소계로만 봐야 한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>매출원</th>
+              <th class="num">Q1 2025</th>
+              <th class="num">Q1 2026</th>
+              <th class="num">전년 대비</th>
+              <th class="num">Q1 2026 비중</th>
+              <th>해석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Search &amp; other</strong></td>
+              <td class="num">$50.7B</td>
+              <td class="num">$60.4B</td>
+              <td class="num positive">+19.1%</td>
+              <td class="num">55.0%</td>
+              <td>구글의 핵심 현금창출원. AI 검색이 장기 리스크지만 현재 매출은 강하다.</td>
+            </tr>
+            <tr>
+              <td><strong>YouTube ads</strong></td>
+              <td class="num">$8.9B</td>
+              <td class="num">$9.9B</td>
+              <td class="num positive">+10.7%</td>
+              <td class="num">9.0%</td>
+              <td>영상 광고와 커넥티드 TV 예산을 흡수하는 두 번째 광고 엔진.</td>
+            </tr>
+            <tr>
+              <td><strong>Google Network</strong></td>
+              <td class="num">$7.3B</td>
+              <td class="num">$7.0B</td>
+              <td class="num negative">-3.9%</td>
+              <td class="num">6.3%</td>
+              <td>외부 사이트 광고 네트워크. 성장축이라기보다 성숙·압박 구간에 가깝다.</td>
+            </tr>
+            <tr>
+              <td><strong>Subscriptions, platforms, devices</strong></td>
+              <td class="num">$10.4B</td>
+              <td class="num">$12.4B</td>
+              <td class="num positive">+19.3%</td>
+              <td class="num">11.3%</td>
+              <td>YouTube Premium, Google One, Play, Pixel 등. 광고 의존도를 일부 낮춘다.</td>
+            </tr>
+            <tr>
+              <td><strong>Google Cloud</strong></td>
+              <td class="num">$12.3B</td>
+              <td class="num">$20.0B</td>
+              <td class="num positive">+63.4%</td>
+              <td class="num">18.2%</td>
+              <td>AI 인프라와 엔터프라이즈 AI 수요가 가장 직접 반영되는 성장축.</td>
+            </tr>
+            <tr>
+              <td><strong>Other Bets</strong></td>
+              <td class="num">$0.5B</td>
+              <td class="num">$0.4B</td>
+              <td class="num negative">-8.7%</td>
+              <td class="num">0.4%</td>
+              <td>Waymo 등 장기 옵션. 현재 매출 기여는 작다.</td>
+            </tr>
+            <tr>
+              <td><strong>Hedging gains/losses</strong></td>
+              <td class="num">-$0.2B</td>
+              <td class="num">-$0.2B</td>
+              <td class="num muted">-</td>
+              <td class="num">-0.2%</td>
+              <td>환헤지 조정. 사업부 매출로 해석하지 않는 편이 좋다.</td>
+            </tr>
+            <tr>
+              <td><strong>총매출</strong></td>
+              <td class="num"><strong>$90.2B</strong></td>
+              <td class="num"><strong>$109.9B</strong></td>
+              <td class="num positive"><strong>+21.8%</strong></td>
+              <td class="num"><strong>100.0%</strong></td>
+              <td>광고가 대부분이지만 Cloud 비중이 빠르게 커지고 있다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>대분류로 본 매출과 이익</h2>
+          <p>
+            Google Services는 Search, YouTube, Network, 구독·플랫폼·기기를 포함하는 본업 묶음이다.
+            이 구간이 대부분의 영업이익을 만들고, Cloud가 두 번째 이익축으로 커지고 있다.
+          </p>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>사업부</th>
+              <th class="num">Q1 2026 매출</th>
+              <th class="num">Q1 2026 영업이익</th>
+              <th class="num">영업이익률</th>
+              <th>해석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Google Services</strong></td>
+              <td class="num">$89.6B</td>
+              <td class="num">$40.6B</td>
+              <td class="num">45.3%</td>
+              <td>Search와 YouTube 중심의 현금창출 엔진. 규제와 AI 검색 리스크의 핵심 대상.</td>
+            </tr>
+            <tr>
+              <td><strong>Google Cloud</strong></td>
+              <td class="num">$20.0B</td>
+              <td class="num">$6.6B</td>
+              <td class="num">32.9%</td>
+              <td>AI 수요가 붙으면서 매출과 이익이 모두 커지는 구간. 지속 가능성이 중요하다.</td>
+            </tr>
+            <tr>
+              <td><strong>Other Bets</strong></td>
+              <td class="num">$0.4B</td>
+              <td class="num negative">-$2.1B</td>
+              <td class="num">-</td>
+              <td>Waymo 등 장기 옵션. 현재는 현금창출원이 아니라 투자 비용에 가깝다.</td>
+            </tr>
+            <tr>
+              <td><strong>Alphabet-level activities</strong></td>
+              <td class="num">-</td>
+              <td class="num negative">-$5.4B</td>
+              <td class="num">-</td>
+              <td>공통비와 기타 본사 비용.</td>
+            </tr>
+            <tr>
+              <td><strong>총 영업이익</strong></td>
+              <td class="num">$109.9B</td>
+              <td class="num"><strong>$39.7B</strong></td>
+              <td class="num"><strong>36.1%</strong></td>
+              <td>Services와 Cloud가 Other Bets 손실과 본사 비용을 충분히 덮고 있다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>실제 현금흐름</h2>
+          <p>
+            구글은 영업현금흐름이 매우 크지만, AI 데이터센터와 서버 투자 때문에 CAPEX도 빠르게 커졌다.
+            아래 FCF는 영업현금흐름에서 유형자산 취득을 뺀 단순 계산이다.
+          </p>
+        </div>
+      </div>
+
+      <div class="cash-bridge" aria-label="2026년 1분기 현금흐름">
+        <div class="bridge-step">
+          <strong>영업현금흐름</strong>
+          <span class="muted">Search, YouTube, Cloud에서 실제 유입</span>
+          <span class="amount">$45.8B</span>
+        </div>
+        <div class="bridge-step spend">
+          <strong>CAPEX</strong>
+          <span class="muted">데이터센터, 서버, 네트워크, 사무실</span>
+          <span class="amount">-$35.7B</span>
+        </div>
+        <div class="bridge-step">
+          <strong>FCF</strong>
+          <span class="muted">AI 인프라 투자 후 남는 현금</span>
+          <span class="amount">$10.1B</span>
+        </div>
+        <div class="bridge-step return">
+          <strong>배당</strong>
+          <span class="muted">현금흐름 대비 부담은 낮음</span>
+          <span class="amount">-$2.5B</span>
+        </div>
+        <div class="bridge-step">
+          <strong>현금+단기투자</strong>
+          <span class="muted">2026년 3월 말 기준</span>
+          <span class="amount">$126.8B</span>
+        </div>
+      </div>
+
+      <div class="table-scroll" style="margin-top: 18px;">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th class="num">Q1 2026</th>
+              <th class="num">FY2025</th>
+              <th>해석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>매출</strong></td>
+              <td class="num">$109.9B</td>
+              <td class="num">$402.8B</td>
+              <td>이미 연간 4,000억 달러 매출 규모의 초대형 플랫폼.</td>
+            </tr>
+            <tr>
+              <td><strong>영업이익</strong></td>
+              <td class="num">$39.7B</td>
+              <td class="num">$129.0B</td>
+              <td>광고와 Cloud의 수익성이 Other Bets 손실을 충분히 상쇄한다.</td>
+            </tr>
+            <tr>
+              <td><strong>순이익</strong></td>
+              <td class="num">$62.6B</td>
+              <td class="num">$132.2B</td>
+              <td>Q1 2026은 기타수익 영향이 커서 반복 현금창출력은 영업이익과 OCF로 보는 편이 낫다.</td>
+            </tr>
+            <tr>
+              <td><strong>영업현금흐름</strong></td>
+              <td class="num">$45.8B</td>
+              <td class="num">$164.7B</td>
+              <td>실제 현금창출력은 여전히 강하다.</td>
+            </tr>
+            <tr>
+              <td><strong>CAPEX</strong></td>
+              <td class="num negative">-$35.7B</td>
+              <td class="num negative">-$91.4B</td>
+              <td>AI 인프라와 데이터센터 투자가 현금흐름의 가장 큰 사용처가 되고 있다.</td>
+            </tr>
+            <tr>
+              <td><strong>FCF</strong></td>
+              <td class="num">$10.1B</td>
+              <td class="num">$73.3B</td>
+              <td>CAPEX 이후에도 현금은 남지만, 과거보다 투자 부담이 커졌다.</td>
+            </tr>
+            <tr>
+              <td><strong>R&amp;D 비용</strong></td>
+              <td class="num">$17.0B</td>
+              <td class="num">$61.1B</td>
+              <td>Gemini, DeepMind, TPU, 인프라 소프트웨어, 자율주행 옵션에 들어가는 손익상 비용.</td>
+            </tr>
+            <tr>
+              <td><strong>자사주매입</strong></td>
+              <td class="num">$0.0B</td>
+              <td class="num negative">-$45.7B</td>
+              <td>분기별 타이밍 영향이 크다. 연간으로는 여전히 큰 주주환원 수단이다.</td>
+            </tr>
+            <tr>
+              <td><strong>배당</strong></td>
+              <td class="num negative">-$2.5B</td>
+              <td class="num negative">-$10.0B</td>
+              <td>현금흐름 대비 부담은 낮다.</td>
+            </tr>
+            <tr>
+              <td><strong>현금+단기투자</strong></td>
+              <td class="num">$126.8B</td>
+              <td class="num">$126.8B</td>
+              <td>AI CAPEX를 내부 현금으로 감당할 수 있는 체력이 있다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>시장지배력</h2>
+          <p>
+            구글의 지배력은 한 제품이 아니라 검색, 브라우저, 모바일 OS, YouTube, 계정, 광고 네트워크,
+            클라우드, TPU가 연결된 배포망에서 나온다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>점유율로 보는 배포망</h3>
+          <div class="dominance">
+            <div class="dominance-row">
+              <span>검색</span>
+              <div class="bar"><span class="bar-search"></span></div>
+              <strong>90.39%</strong>
+            </div>
+            <div class="dominance-row">
+              <span>Chrome</span>
+              <div class="bar"><span class="bar-chrome"></span></div>
+              <strong>70.25%</strong>
+            </div>
+            <div class="dominance-row">
+              <span>Android</span>
+              <div class="bar"><span class="bar-android"></span></div>
+              <strong>68.00%</strong>
+            </div>
+            <div class="dominance-row">
+              <span>Cloud</span>
+              <div class="bar"><span class="bar-cloud"></span></div>
+              <strong>13% 내외</strong>
+            </div>
+          </div>
+          <p class="print-note">
+            검색, 브라우저, 모바일 OS는 StatCounter 2026년 5월 기준. Cloud는 Synergy/Omdia 등 외부 조사 기준으로 10%대 초중반이다.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>지배력의 성격</h3>
+          <table class="matrix">
+            <tbody>
+              <tr>
+                <td><strong>Search</strong></td>
+                <td>사용자 의도 데이터와 광고주 수요가 동시에 쌓이는 양면 시장.</td>
+              </tr>
+              <tr>
+                <td><strong>Chrome/Android</strong></td>
+                <td>검색, 계정, 앱, 결제, 광고 측정으로 이어지는 배포망.</td>
+              </tr>
+              <tr>
+                <td><strong>YouTube</strong></td>
+                <td>영상 소비 시간과 광고 지면, 구독을 함께 가진 미디어 플랫폼.</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud/TPU</strong></td>
+                <td>AI 인프라 비용을 자체 칩과 데이터센터로 낮출 수 있는 구조.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>AI 시대의 핵심 질문</h2>
+          <p>
+            구글 분석은 “Gemini가 좋은가”만으로 끝나지 않는다. 광고 현금흐름을 AI 인프라와 Cloud 이익으로
+            바꿀 수 있는지를 봐야 한다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="tag green">기회</span>
+          <strong>AI 검색이 쿼리와 광고 지면을 늘릴 수 있다.</strong>
+          <p>
+            검색 결과가 답변형으로 바뀌어도 사용량이 늘고 광고 형식이 적응하면 Search의 현금흐름은 유지될 수 있다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag blue">기회</span>
+          <strong>TPU와 Gemini가 Cloud 차별화가 될 수 있다.</strong>
+          <p>
+            Google은 Nvidia GPU만 사는 고객이 아니라 자체 TPU를 설계하고 운영한다. 대규모 추론 비용이 중요해질수록 이 강점이 커질 수 있다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag violet">옵션</span>
+          <strong>Waymo는 아직 작지만 플랫폼 전환 옵션이다.</strong>
+          <p>
+            현재는 손실 사업이지만, 자율주행이 상용화되면 광고나 클라우드와 다른 완전히 새로운 현금흐름이 생길 수 있다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="callout">
+          <strong>좋게 보는 논리</strong>
+          <ul class="list">
+            <li>Search와 YouTube의 영업현금흐름이 AI CAPEX를 내부 조달할 수 있다.</li>
+            <li>Chrome, Android, Gmail, Maps, YouTube, 계정 기반 배포망이 매우 강하다.</li>
+            <li>Cloud가 매출 성장뿐 아니라 영업이익까지 기여하기 시작했다.</li>
+            <li>TPU를 보유해 AI 추론 비용을 자체적으로 통제할 수 있다.</li>
+          </ul>
+        </div>
+        <div class="callout risk">
+          <strong>반대 논리</strong>
+          <ul class="list">
+            <li>AI 답변형 검색이 광고 클릭과 광고 단가를 낮출 수 있다.</li>
+            <li>CAPEX가 너무 커지면 FCF와 주주환원이 압박받는다.</li>
+            <li>검색, 광고, Android, Play Store, Chrome 모두 규제 대상이다.</li>
+            <li>Cloud는 빠르게 성장하지만 AWS와 Azure 대비 후발 주자다.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>확인해야 할 지표</h2>
+          <p>
+            다음 실적에서 이 지표들이 흔들리면 구글에 대한 가정도 다시 봐야 한다.
+          </p>
+        </div>
+      </div>
+
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>지표</th>
+            <th>왜 중요한가</th>
+            <th>가정이 흔들리는 지점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Search 매출 성장률</strong></td>
+            <td>구글의 핵심 현금창출원이 AI 검색 전환 이후에도 유지되는지 확인한다.</td>
+            <td>쿼리는 늘지만 매출 성장률이 둔화되거나 광고 단가가 떨어질 때.</td>
+          </tr>
+          <tr>
+            <td><strong>Google Cloud 매출과 영업이익률</strong></td>
+            <td>AI 인프라 투자가 실제 이익 사업으로 전환되는지 보여준다.</td>
+            <td>매출은 늘지만 마진이 급락하거나 CAPEX 회수가 늦어질 때.</td>
+          </tr>
+          <tr>
+            <td><strong>CAPEX / OCF 비율</strong></td>
+            <td>AI 데이터센터 투자가 현금흐름을 얼마나 압박하는지 보여준다.</td>
+            <td>CAPEX가 OCF 대부분을 계속 먹어 FCF가 구조적으로 낮아질 때.</td>
+          </tr>
+          <tr>
+            <td><strong>R&amp;D와 직원 비용</strong></td>
+            <td>AI 경쟁이 비용 구조를 얼마나 무겁게 만드는지 확인한다.</td>
+            <td>AI 성과보다 인력·연구 비용 증가가 더 빠를 때.</td>
+          </tr>
+          <tr>
+            <td><strong>규제 진행 상황</strong></td>
+            <td>Search 기본값, 광고 기술, Play Store, Chrome 분리 가능성이 가치에 직접 영향을 준다.</td>
+            <td>검색 기본값 계약 제한, Chrome 매각, 광고 사업 분리 같은 구조적 조치가 나올 때.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>현재 판단</h2>
+          <p>
+            투자 권유가 아니라 산업 구조와 현금흐름 관점의 작업 메모다.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <span class="tag green">긍정</span>
+          <strong>AI 전환을 감당할 수 있는 현금기계다.</strong>
+          <p>
+            구글은 AI에 가장 큰 돈을 써야 하는 회사 중 하나지만, 동시에 그 돈을 내부에서 만들어낼 수 있는 회사다.
+            2025년에도 CAPEX 914억 달러를 쓰고 FCF 733억 달러를 남겼다.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag red">주의</span>
+          <strong>핵심 가정은 Search 광고의 방어다.</strong>
+          <p>
+            Search가 꺾이면 구글의 AI 투자는 방어 비용이 된다. 반대로 Search가 유지되고 Cloud가 커지면,
+            구글은 광고 현금흐름을 AI 인프라 현금흐름으로 전환한 회사가 된다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>출처</h2>
+          <p>
+            수치와 시장점유율은 시간이 지나면 바뀌므로 업데이트 시점마다 다시 확인해야 한다.
+          </p>
+        </div>
+      </div>
+
+      <ul class="source-list">
+        <li><a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000048/goog-20260331.htm">Alphabet 2026년 1분기 10-Q</a></li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm">Alphabet 2025년 10-K</a></li>
+        <li><a href="https://gs.statcounter.com/search-engine-market-share">StatCounter 검색엔진 점유율</a></li>
+        <li><a href="https://gs.statcounter.com/browser-market-share">StatCounter 브라우저 점유율</a></li>
+        <li><a href="https://gs.statcounter.com/os-market-share/mobile/worldwide">StatCounter 모바일 OS 점유율</a></li>
+        <li><a href="https://www.techradar.com/pro/global-cloud-wars-see-aws-increasingly-under-threat-from-microsoft-and-google">Synergy Research 기반 클라우드 점유율 보도</a></li>
+        <li><a href="https://www.itpro.com/cloud/cloud-computing/cloud-infrastructure-spending-hit-usd102-6-billion-in-q3-2025-and-aws-marked-its-strongest-performance-in-three-years">Omdia 기반 클라우드 인프라 지출 보도</a></li>
+      </ul>
+
+      <p class="print-note">
+        이 문서는 투자 권유가 아니라 기업 구조, 현금흐름, 시장지배력, 리스크를 정리하기 위한 작업 메모다.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
